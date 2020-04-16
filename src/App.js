@@ -36,6 +36,21 @@ export default function App() {
     }
   }
 
+  async function handleAddRepository(){
+    const response = await api.post('repositories', {
+      title: `Novo projeto ${Date.now()}`,
+      url: 'www.andix.com.br',
+      techs: [
+        "Teste add",
+        "React Native"
+      ]
+    })
+
+    const repository = response.data;
+
+    setRepositories([...repositories, repository]);
+  }
+
   return (
     <>
       <StatusBar barStyle="light-content" backgroundColor="#7159c1" />
@@ -72,6 +87,13 @@ export default function App() {
           )}
         />
         
+        <TouchableOpacity 
+          activeOpacity={0.6} 
+          style={styles.buttonAdd}
+          onPress={handleAddRepository}
+        >
+          <Text style={styles.buttonTxtAdd}>Adicionar projeto</Text>
+        </TouchableOpacity>
       </SafeAreaView>
     </>
   );
@@ -126,4 +148,16 @@ const styles = StyleSheet.create({
     backgroundColor: "#7159c1",
     padding: 15,
   },
+  buttonAdd: {
+    backgroundColor: '#FFF',
+    margin: 20,
+    height: 50,
+    borderRadius: 4,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  buttonTxtAdd: {
+    fontWeight: 'bold',
+    fontSize: 16
+  }
 });
